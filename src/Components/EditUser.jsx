@@ -22,6 +22,9 @@ const useStyle = makeStyles((theme) => ({
     width: '100%',
     margin: theme.spacing(1, 0),
   },
+  buttonMargin: {
+    marginTop: '10px',
+  },
 }));
 
 const EditUser = () => {
@@ -33,19 +36,17 @@ const EditUser = () => {
   } = useForm({
     defaultValues: {},
   });
-  const onSubmit = async (data) => {
-    console.log(errors);
-    await editUser(id, data);
-    navigate('/');
-  };
   const { id } = useParams();
   const classes = useStyle();
   const navigate = useNavigate();
+  const onSubmit = async (data) => {
+    await editUser(id, data);
+    navigate('/');
+  };
   useEffect(() => {
     const resetAsyncForm = async () => {
       const result = await getUsers(id);
       reset(result.data);
-      console.log(result.data);
     };
     resetAsyncForm();
   }, [id, reset]);
@@ -60,6 +61,7 @@ const EditUser = () => {
           fullWidth
           className={classes.inputField}
           name="name"
+          InputLabelProps={{ shrink: true }}
           {...register('name', { required: 'Name is required' })}
           error={!!errors.name}
           helperText={errors.name ? errors.name.message : null}
@@ -71,6 +73,7 @@ const EditUser = () => {
           fullWidth
           className={classes.inputField}
           name="username"
+          InputLabelProps={{ shrink: true }}
           {...register('username', { required: 'Username is required' })}
           error={!!errors.username}
           helperText={errors.username ? errors.username.message : null}
@@ -82,6 +85,7 @@ const EditUser = () => {
           fullWidth
           className={classes.inputField}
           name="email"
+          InputLabelProps={{ shrink: true }}
           {...register('email', {
             required: 'Email is required',
             pattern: {
@@ -99,6 +103,7 @@ const EditUser = () => {
           fullWidth
           className={classes.inputField}
           name="phone"
+          InputLabelProps={{ shrink: true }}
           {...register('phone', {
             required: 'Phone Number is required',
             pattern: {
@@ -109,7 +114,13 @@ const EditUser = () => {
           error={!!errors.phone}
           helperText={errors.phone ? errors.phone.message : null}
         />
-        <Button variant="contained" color="primary" type="submit">
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          className={classes.buttonMargin}
+          type="submit"
+        >
           Edit User
         </Button>
       </form>
