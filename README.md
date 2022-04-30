@@ -1,4 +1,4 @@
-# **Crud_App_Frontend**
+# **Crud_Frontend**
 
 In this project we are going to create Crud application using reactjs
 
